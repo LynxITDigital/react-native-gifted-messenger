@@ -1,15 +1,28 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet } from 'react-native';
 
 import ParsedText from 'react-native-parsed-text';
 
+
 const styles = StyleSheet.create({
+  bubbleContainer: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  bubbleContainerRight: {
+    justifyContent: 'flex-end'
+  },
+  chatArrow: {
+    marginTop: 8,
+  },
   bubble: {
     borderRadius: 15,
     paddingLeft: 14,
     paddingRight: 14,
     paddingBottom: 10,
     paddingTop: 8,
+    flex: 1,
+    alignSelf:'stretch'
   },
   text: {
     color: '#000',
@@ -48,7 +61,7 @@ export default class Bubble extends React.Component {
   }
 
   renderText(text = '', position) {
-    if (this.props.renderCustomText && this.props.renderCustomText(this.props) !==false) {
+    if (this.props.renderCustomText) {
       return this.props.renderCustomText(this.props);
     }
 
@@ -96,23 +109,34 @@ export default class Bubble extends React.Component {
 
   render() {
     const flexStyle = {};
-    const realLength = function(str) {
-      return str.replace(/[^\x00-\xff]/g, "**").length; // [^\x00-\xff] - Matching non double byte character
-    };
     if (this.props.text) {
-      if (realLength(this.props.text) > 40) {
+      if (this.props.text.length > 40) {
         flexStyle.flex = 1;
       }
     }
 
+    var arrowLeft;
+    var arrowRight;
+    var bubbleContainerStyle;
+    if(this.props.position === 'left') {
+      arrowLeft = <Image style={styles.chatArrow}  source={require('./assets/chat_arrow_left.png')} />
+    } else if(this.props.position === 'right') {
+      console.log("RENDEIRNG RIGHT");
+      arrowRight = <Image style={styles.chatArrow}  source={require('./assets/chat_arrow_right.png')} />
+      bubbleContainerStyle = styles.bubbleContainerRight;
+    }
     return (
-      <View style={[styles.bubble,
-        (this.props.position === 'left' ? styles.bubbleLeft : this.props.position === 'right' ? styles.bubbleRight : styles.bubbleCenter),
-        (this.props.status === 'ErrorButton' ? styles.bubbleError : null),
-        flexStyle]}
-      >
-        {this.props.name}
-        {this.renderText(this.props.text, this.props.position)}
+      <View style={[styles.bubbleContainer, bubbleContainerStyle]}>
+        {arrowLeft}
+        <View style={[styles.bubble,
+          (this.props.position === 'left' ? styles.bubbleLeft : this.props.position === 'right' ? styles.bubbleRight : styles.bubbleCenter),
+          (this.props.status === 'ErrorButton' ? styles.bubbleError : null),
+          flexStyle]}
+        >
+          {this.props.name}
+          {this.renderText(this.props.text, this.props.position)}
+        </View>
+        {arrowRight}
       </View>
   );
   }

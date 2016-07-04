@@ -677,7 +677,7 @@ GiftedMessenger.propTypes = {
   renderCustomText: React.PropTypes.func,
   renderCustomDate: React.PropTypes.func,
   scrollAnimated: React.PropTypes.bool,
-  sendButtonText: React.PropTypes.string,
+  sendButtonText: React.PropTypes.object,
   senderImage: React.PropTypes.object,
   senderName: React.PropTypes.string,
   styles: React.PropTypes.object,

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   image: {
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     borderRadius: 15,
   },
   imageLeft: {
@@ -86,7 +86,7 @@ export default class Message extends Component {
               underlayColor='transparent'
               onPress={() => onImagePress(rowData)}
             >
-              <ImageView {...rowData}
+              <ImageView
                 source={rowData.image}
                 style={[styles.imagePosition, styles.image, (rowData.position === 'left' ? styles.imageLeft : styles.imageRight)]}
               />
@@ -94,7 +94,7 @@ export default class Message extends Component {
           );
         }
         return (
-          <ImageView {...rowData}
+          <ImageView
             source={rowData.image}
             style={[styles.imagePosition, styles.image, (rowData.position === 'left' ? styles.imageLeft : styles.imageRight)]}
           />
