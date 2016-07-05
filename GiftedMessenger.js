@@ -175,11 +175,13 @@ class GiftedMessenger extends Component {
     }
 
     if (nextProps.maxHeight !== this.props.maxHeight) {
+      console.log("MSGER UPDATING HEIGHT: " + this.props.maxHeight + " != " + nextProps.maxHeight )
       this.listViewMaxHeight = nextProps.maxHeight;
-      Animated.timing(this.state.height, {
-        toValue: this.listViewMaxHeight,
-        duration: 150,
-      }).start();
+      setTimeout(() => {
+        Animated.timing(this.state.height, {
+          toValue: this.listViewMaxHeight,
+          duration: 150,
+        }).start();}, 10);
     }
 
     if (nextProps.hideTextInput && !this.props.hideTextInput) {
