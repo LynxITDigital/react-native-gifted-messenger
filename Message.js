@@ -56,7 +56,7 @@ export default class Message extends Component {
 
   renderName(name, displayNames, diffMessage){
     if (displayNames === true) {
-      if (diffMessage === null || name !== diffMessage.name) {
+    //  if (diffMessage === null || name !== diffMessage.name) {
         return (
           <Text
             style={[
@@ -67,7 +67,7 @@ export default class Message extends Component {
             {name}
           </Text>
         );
-      }
+    //  }
     }
     return null;
   }

@@ -175,7 +175,7 @@ class GiftedMessenger extends Component {
     }
 
     if (nextProps.maxHeight !== this.props.maxHeight) {
-      console.log("MSGER UPDATING HEIGHT: " + this.props.maxHeight + " != " + nextProps.maxHeight )
+      //console.log("MSGER UPDATING HEIGHT: " + this.props.maxHeight + " != " + nextProps.maxHeight )
       this.listViewMaxHeight = nextProps.maxHeight;
       setTimeout(() => {
         Animated.timing(this.state.height, {
@@ -200,8 +200,14 @@ class GiftedMessenger extends Component {
   }
 
   onSend() {
+    var text = this.state.text.trim();
+
+    if(text.length === 0) {
+      return;
+    }
+    
     const message = {
-      text: this.state.text.trim(),
+      text: text,
       name: this.props.senderName,
       image: this.props.senderImage,
       position: 'right',
