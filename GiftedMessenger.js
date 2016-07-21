@@ -242,8 +242,9 @@ class GiftedMessenger extends Component {
   }
 
   onKeyboardWillShow(e) {
+    var {height} = Dimensions.get('window')
     Animated.timing(this.state.height, {
-      toValue: this.listViewMaxHeight - e.endCoordinates.height,
+      toValue: this.listViewMaxHeight - (height - e.endCoordinates.screenY),
       duration: 200,
     }).start();
   }
