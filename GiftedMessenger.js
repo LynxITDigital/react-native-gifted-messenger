@@ -66,7 +66,7 @@ class GiftedMessenger extends Component {
       dataSource: ds.cloneWithRows([]),
       text: props.text,
       disabled: true,
-      height: new Animated.Value(this.listViewMaxHeight),
+      height: this.listViewMaxHeight,
       appearAnim: new Animated.Value(0),
     };
   }
@@ -177,24 +177,22 @@ class GiftedMessenger extends Component {
     if (nextProps.maxHeight !== this.props.maxHeight) {
       //console.log("MSGER UPDATING HEIGHT: " + this.props.maxHeight + " != " + nextProps.maxHeight )
       this.listViewMaxHeight = nextProps.maxHeight;
-      setTimeout(() => {
-        Animated.timing(this.state.height, {
-          toValue: this.listViewMaxHeight,
-          duration: 150,
-        }).start();}, 10);
+      this.setState({
+        height: this.listViewMaxHeight
+      })
     }
 
     if (nextProps.hideTextInput && !this.props.hideTextInput) {
       this.listViewMaxHeight += textInputHeight;
 
       this.setState({
-        height: new Animated.Value(this.listViewMaxHeight),
+        height: this.listViewMaxHeight,
       });
     } else if (!nextProps.hideTextInput && this.props.hideTextInput) {
       this.listViewMaxHeight -= textInputHeight;
 
       this.setState({
-        height: new Animated.Value(this.listViewMaxHeight),
+        height: this.listViewMaxHeight,
       });
     }
   }
@@ -205,7 +203,7 @@ class GiftedMessenger extends Component {
     if(text.length === 0) {
       return;
     }
-    
+
     const message = {
       text: text,
       name: this.props.senderName,
@@ -222,10 +220,9 @@ class GiftedMessenger extends Component {
   }
 
   onKeyboardWillHide() {
-    Animated.timing(this.state.height, {
-      toValue: this.listViewMaxHeight,
-      duration: 150,
-    }).start();
+    this.setState({
+      height: this.listViewMaxHeight
+    })
   }
 
   onKeyboardDidHide(e) {
@@ -242,11 +239,9 @@ class GiftedMessenger extends Component {
   }
 
   onKeyboardWillShow(e) {
-    var {height} = Dimensions.get('window')
-    Animated.timing(this.state.height, {
-      toValue: this.listViewMaxHeight - (height - e.endCoordinates.screenY),
-      duration: 200,
-    }).start();
+    this.setState({
+      height: this.listViewMaxHeight
+    })
   }
 
   onKeyboardDidShow(e) {
@@ -519,7 +514,7 @@ class GiftedMessenger extends Component {
 
   renderAnimatedView() {
     return (
-      <Animated.View
+      <View
         style={{
           height: this.state.height,
           justifyContent: 'flex-end',
@@ -554,7 +549,7 @@ class GiftedMessenger extends Component {
           {...this.props}
         />
 
-      </Animated.View>
+      </View>
     );
   }
 
